@@ -146,10 +146,10 @@ class JiraExporters:
 - **Updated:** {issue['updated']}
 
 ## Labels
-{'None' if not issue['labels'] else '\\n'.join(f'- {label}' for label in issue['labels'])}
+{'None' if not issue['labels'] else chr(10).join(f'- {label}' for label in issue['labels'])}
 
 ## Components
-{'None' if not issue['components'] else '\\n'.join(f'- {comp}' for comp in issue['components'])}
+{'None' if not issue['components'] else chr(10).join(f'- {comp}' for comp in issue['components'])}
 
 ## Description
 {issue['description']}
