@@ -39,15 +39,23 @@ JIRA_API_URL=your_domain.atlassian.net
 
 ## Usage
 
-You can run the script in two ways:
+You can run the script in three ways:
 
-### Method 1: Command Line Arguments
+### Method 1: Simplified Command (Recommended)
+
+When you have a `.env` file configured, you can use the simplified syntax:
+
+```bash
+python jira_exporter.py <issue_key(s)> [format]
+```
+
+### Method 2: Command Line Arguments
 
 ```bash
 python jira_exporter.py <jira_token> <jira_server> <issue_key(s)> [format]
 ```
 
-### Method 2: Environment Variables
+### Method 3: Environment Variable Placeholders
 
 ```bash
 python jira_exporter.py ":" "" <issue_key(s)> [format]
@@ -58,12 +66,20 @@ When using `":"` as the token and `""` as the server, the script will use the va
 ### Single Issue Export
 
 ```bash
+# Simplified with .env file
+python jira_exporter.py "SRD-1003" json
+
+# Full command line arguments
 python jira_exporter.py "your-token" "https://your-domain.atlassian.net" "PROJECT-123" json
 ```
 
 ### Multiple Issues Export
 
 ```bash
+# Simplified with .env file
+python jira_exporter.py "SRD-1003,SRD-1002,SV3-1" json
+
+# Full command line arguments
 python jira_exporter.py "your-token" "https://your-domain.atlassian.net" "PROJECT-123,PROJECT-124,PROJECT-125" json
 ```
 

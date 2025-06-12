@@ -212,45 +212,106 @@ class JiraExporter:
         return related_issues
 
 def main():
-    if len(sys.argv) < 4:
-        print("Usage: python jira_exporter.py <jira_token> <jira_server> <issue_key(s)> [format]")
-        print("Format options:")
-        print("  - xml:  XML format (default)")
-        print("  - json: JSON format")
-        print("  - markdown: Markdown format")
-        print("  - raw:  Raw Jira API response")
-        print("\nExamples:")
-        print("  Single issue: python jira_exporter.py YOUR-EMAIL:YOUR-TOKEN norbloc.atlassian.net PROJ-123 json")
-        print("  Multiple issues: python jira_exporter.py YOUR-EMAIL:YOUR-TOKEN norbloc.atlassian.net \"PROJ-123,PROJ-124,PROJ-125\" json")
-        print("\nUsing environment variables:")
-        print("  Create a .env file with:")
-        print("    JIRA_API_TOKEN=your_token")
-        print("    JIRA_API_USER=your_email@domain.com")
-        print("    JIRA_API_URL=your_domain.atlassian.net")
-        print("  Then use: python jira_exporter.py \":\" \"\" PROJ-123 json")
-        sys.exit(1)
+    # Check if we have environment variables available for simplified usage
+    env_token = os.getenv('JIRA_API_TOKEN')
+    env_server = os.getenv('JIRA_API_URL')
+    
+    # Support simplified command: python jira_exporter.py ISSUE-KEY [format]
+    if len(sys.argv) >= 2 and env_token and env_server:
+        # Check if first argument looks like an issue key (contains letters and numbers with dash)
+        potential_issue_key = sys.argv[1]
+        if '-' in potential_issue_key and not potential_issue_key.startswith('-'):
+            # Simplified usage with environment variables
+            issue_keys_input = potential_issue_key
+            format = sys.argv[2] if len(sys.argv) > 2 else 'xml'
+            token = env_token
+            server = env_server
+        else:
+            # Fall back to full command syntax
+            if len(sys.argv) < 4:
+                print("Usage: python jira_exporter.py <jira_token> <jira_server> <issue_key(s)> [format]")
+                print("OR (when .env file is configured):")
+                print("Usage: python jira_exporter.py <issue_key(s)> [format]")
+                print("\nFormat options:")
+                print("  - xml:  XML format (default)")
+                print("  - json: JSON format")
+                print("  - markdown: Markdown format")
+                print("  - raw:  Raw Jira API response")
+                print("\nExamples:")
+                print("  Full syntax: python jira_exporter.py YOUR-EMAIL:YOUR-TOKEN norbloc.atlassian.net PROJ-123 json")
+                print("  Simplified (with .env): python jira_exporter.py PROJ-123 json")
+                print("  Environment placeholders: python jira_exporter.py \":\" \"\" PROJ-123 json")
+                print("\nUsing environment variables:")
+                print("  Create a .env file with:")
+                print("    JIRA_API_TOKEN=your_token")
+                print("    JIRA_API_USER=your_email@domain.com")
+                print("    JIRA_API_URL=your_domain.atlassian.net")
+                sys.exit(1)
+            
+            token_arg = sys.argv[1]
+            server_arg = sys.argv[2]
+            issue_keys_input = sys.argv[3]
+            format = sys.argv[4] if len(sys.argv) > 4 else 'xml'
 
-    token_arg = sys.argv[1]
-    server_arg = sys.argv[2]
-    issue_keys_input = sys.argv[3]
-    format = sys.argv[4] if len(sys.argv) > 4 else 'xml'
+            # Handle environment variable placeholders
+            if token_arg == ":" or token_arg == "":
+                token = env_token
+                if not token:
+                    print("Error: JIRA_API_TOKEN environment variable is required when using ':' as token")
+                    sys.exit(1)
+            else:
+                token = token_arg
 
-    # Handle environment variable placeholders
-    if token_arg == ":" or token_arg == "":
-        token = os.getenv('JIRA_API_TOKEN')
-        if not token:
-            print("Error: JIRA_API_TOKEN environment variable is required when using ':' as token")
-            sys.exit(1)
+            if server_arg == "" or server_arg == "env":
+                server = env_server
+                if not server:
+                    print("Error: JIRA_API_URL environment variable is required when using empty string as server")
+                    sys.exit(1)
+            else:
+                server = server_arg
     else:
-        token = token_arg
-
-    if server_arg == "" or server_arg == "env":
-        server = os.getenv('JIRA_API_URL')
-        if not server:
-            print("Error: JIRA_API_URL environment variable is required when using empty string as server")
+        # Original full command syntax required
+        if len(sys.argv) < 4:
+            print("Usage: python jira_exporter.py <jira_token> <jira_server> <issue_key(s)> [format]")
+            print("OR (when .env file is configured):")
+            print("Usage: python jira_exporter.py <issue_key(s)> [format]")
+            print("\nFormat options:")
+            print("  - xml:  XML format (default)")
+            print("  - json: JSON format")
+            print("  - markdown: Markdown format")
+            print("  - raw:  Raw Jira API response")
+            print("\nExamples:")
+            print("  Full syntax: python jira_exporter.py YOUR-EMAIL:YOUR-TOKEN norbloc.atlassian.net PROJ-123 json")
+            print("  Simplified (with .env): python jira_exporter.py PROJ-123 json")
+            print("  Environment placeholders: python jira_exporter.py \":\" \"\" PROJ-123 json")
+            print("\nUsing environment variables:")
+            print("  Create a .env file with:")
+            print("    JIRA_API_TOKEN=your_token")
+            print("    JIRA_API_USER=your_email@domain.com")
+            print("    JIRA_API_URL=your_domain.atlassian.net")
             sys.exit(1)
-    else:
-        server = server_arg
+
+        token_arg = sys.argv[1]
+        server_arg = sys.argv[2]
+        issue_keys_input = sys.argv[3]
+        format = sys.argv[4] if len(sys.argv) > 4 else 'xml'
+
+        # Handle environment variable placeholders
+        if token_arg == ":" or token_arg == "":
+            token = env_token
+            if not token:
+                print("Error: JIRA_API_TOKEN environment variable is required when using ':' as token")
+                sys.exit(1)
+        else:
+            token = token_arg
+
+        if server_arg == "" or server_arg == "env":
+            server = env_server
+            if not server:
+                print("Error: JIRA_API_URL environment variable is required when using empty string as server")
+                sys.exit(1)
+        else:
+            server = server_arg
 
     if format not in ['xml', 'json', 'markdown', 'raw']:
         print("Error: Format must be one of: xml, json, markdown, raw")
