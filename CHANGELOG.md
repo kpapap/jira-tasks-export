@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2025-06-12
+
+### Added
+
+- **FastAPI REST API Server**: Complete REST API interface for all CLI functionality
+  - Multiple API endpoints for single and batch exports
+  - Support for all export formats (XML, JSON, Markdown, Raw)
+  - Environment variable and explicit credential support
+  - Comprehensive API documentation with Swagger UI at `/docs`
+  - CORS middleware for web application compatibility
+  - Proper error handling and response models
+- **API Endpoints**:
+  - `POST /export` - Batch export with request body
+  - `GET /export/{issue_key}` - Single issue export via URL path
+  - `GET /export/multiple/{issue_keys}` - Multiple issues via URL path
+  - `GET /health` - Health check endpoint
+  - `GET /formats` - List supported export formats
+  - `GET /docs-examples` - API usage examples
+- **Server Management**:
+  - `start_api.py` - Easy server startup script
+  - Command-line arguments for host, port, and reload options
+  - Background process support for development
+- **Dependencies**: Added FastAPI and Uvicorn to requirements.txt
+
+### Technical Details
+
+- The API server runs on `http://localhost:8000` by default
+- Interactive documentation available at `/docs` and `/redoc`
+- Supports both environment variables and explicit credentials in requests
+- All CLI functionality is now accessible via REST API
+- CORS enabled for cross-origin requests from web applications
+
 ## [1.1.0] - 2025-06-12
 
 ### Added
@@ -60,5 +92,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - python-dotenv>=1.0.0
 
 [Unreleased]: https://github.com/kpapap/jira-tasks-export/compare/v1.1.0...HEAD
+[1.2.0]: https://github.com/kpapap/jira-tasks-export/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/kpapap/jira-tasks-export/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/kpapap/jira-tasks-export/releases/tag/v1.0.0
