@@ -159,3 +159,115 @@ The Markdown output is formatted with clear sections for:
 - Comments with author and timestamp
 - Related links
 - Related issues grouped by relationship type (subtasks, epics, etc.)
+
+## REST API
+
+In addition to the command-line interface, the Jira Task Exporter also provides a REST API using FastAPI.
+
+### Starting the API Server
+
+```bash
+# Start the API server
+python start_api.py
+
+# Or with custom host/port
+python start_api.py --host 0.0.0.0 --port 8000
+
+# For development with auto-reload
+python start_api.py --reload
+```
+
+The API server will be available at:
+
+- **API Server**: http://127.0.0.1:8000
+- **Interactive API Documentation**: http://127.0.0.1:8000/docs
+- **ReDoc Documentation**: http://127.0.0.1:8000/redoc
+
+### API Endpoints
+
+#### Export Issues (POST)
+
+```bash
+POST /export
+Content-Type: application/json
+
+{
+  "issue_keys": ["SRD-1003", "SRD-1002"],
+  "format": "json",
+  "credentials": {
+    "token": "your-api-token",
+    "server": "your-domain.atlassian.net",
+    "user": "your-email@domain.com"
+  }
+}
+```
+
+#### Export Single Issue (GET)
+
+```bash
+GET /export/SRD-1003?format=json&token=your-token&server=your-domain.atlassian.net
+```
+
+#### Export Multiple Issues (GET)
+
+```bash
+GET /export/multiple/SRD-1003,SRD-1002?format=markdown
+```
+
+#### Using Environment Variables
+
+When `JIRA_API_TOKEN`, `JIRA_API_URL`, and `JIRA_API_USER` are configured:
+
+```bash
+POST /export
+Content-Type: application/json
+
+{
+  "issue_keys": ["SRD-1003"],
+  "format": "json"
+}
+```
+
+### API Features
+
+- **Multiple Export Formats**: XML, JSON, Markdown, Raw
+- **Flexible Authentication**: Request credentials or environment variables
+- **Single and Batch Export**: Export one or multiple issues
+- **CORS Support**: Cross-origin requests enabled
+- **Interactive Documentation**: Built-in Swagger UI and ReDoc
+- **RESTful Design**: Standard HTTP methods and status codes
+- **Error Handling**: Detailed error messages and appropriate HTTP codes
+
+### API Examples
+
+#### Using curl
+
+```bash
+# Export single issue
+curl -X GET "http://localhost:8000/export/SRD-1003?format=json"
+
+# Export multiple issues
+curl -X POST "http://localhost:8000/export" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "issue_keys": ["SRD-1003", "SRD-1002"],
+    "format": "markdown"
+  }'
+```
+
+#### Using Python requests
+
+```python
+import requests
+
+# Export single issue
+response = requests.get("http://localhost:8000/export/SRD-1003?format=json")
+data = response.json()
+
+# Export multiple issues
+response = requests.post("http://localhost:8000/export", json={
+    "issue_keys": ["SRD-1003", "SRD-1002"],
+    "format": "markdown"
+})
+result = response.json()
+```

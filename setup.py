@@ -40,6 +40,7 @@ setup(
     entry_points={
         "console_scripts": [
             "jira-exporter=jira_exporter:main",
+            "jira-exporter-api=api_server:run_server",
         ],
     },
     include_package_data=True,
