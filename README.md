@@ -44,9 +44,23 @@ JIRA_API_URL=your_domain.atlassian.net
 
 ## Usage
 
+The Jira Task Exporter provides three different interfaces to suit various use cases:
+
+### 🌐 Web UI (Recommended for most users)
+
+Start the web interface for a user-friendly graphical experience:
+
+```bash
+python start_web.py
+```
+
+Access the web interface at: http://localhost:8501
+
+### 🔧 Command Line Interface
+
 You can run the script in three ways:
 
-### Method 1: Simplified Command (Recommended)
+#### Method 1: Simplified Command (Recommended)
 
 When you have a `.env` file configured, you can use the simplified syntax:
 
@@ -54,19 +68,32 @@ When you have a `.env` file configured, you can use the simplified syntax:
 python jira_exporter.py <issue_key(s)> [format]
 ```
 
-### Method 2: Command Line Arguments
+#### Method 2: Command Line Arguments
 
 ```bash
 python jira_exporter.py <jira_token> <jira_server> <issue_key(s)> [format]
 ```
 
-### Method 3: Environment Variable Placeholders
+#### Method 3: Environment Variable Placeholders
 
 ```bash
 python jira_exporter.py ":" "" <issue_key(s)> [format]
 ```
 
 When using `":"` as the token and `""` as the server, the script will use the values from your `.env` file.
+
+### 🚀 REST API
+
+Start the API server for programmatic access:
+
+```bash
+python start_api.py
+```
+
+Access the API at: http://localhost:8000
+Interactive documentation: http://localhost:8000/docs
+
+## CLI Examples
 
 ### Single Issue Export
 
@@ -159,6 +186,53 @@ The Markdown output is formatted with clear sections for:
 - Comments with author and timestamp
 - Related links
 - Related issues grouped by relationship type (subtasks, epics, etc.)
+
+## Web UI
+
+The Jira Task Exporter includes a user-friendly web interface built with Streamlit.
+
+### Starting the Web UI
+
+```bash
+# Start the web interface
+python start_web.py
+
+# Or with custom host/port
+python start_web.py --host 0.0.0.0 --port 8501
+```
+
+The web interface will be available at:
+
+- **Web Interface**: http://localhost:8501
+
+### Web UI Features
+
+- **🎨 User-Friendly Interface**: Clean, intuitive design with modern styling
+- **⚙️ Easy Configuration**: Simple credential management with environment variable detection
+- **📤 Multiple Input Methods**: 
+  - Single issue input
+  - Comma-separated multiple issues
+  - Text area for bulk issue lists
+- **📊 Real-Time Status**: Live export progress and status updates
+- **💾 Instant Downloads**: Direct download of exported files
+- **👀 Content Preview**: Preview exported content before downloading
+- **📦 Batch Processing**: Automatic ZIP creation for multiple exports
+- **🔒 Secure**: Credentials handled securely with session isolation
+
+### Web UI Usage
+
+1. **Configure Credentials**: Use environment variables or input directly in the sidebar
+2. **Enter Issue Keys**: Choose your preferred input method and enter Jira issue keys
+3. **Select Format**: Choose from JSON, XML, Markdown, or Raw formats
+4. **Export**: Click the export button to process your issues
+5. **Download**: Download individual files or ZIP archives
+6. **Preview**: View exported content directly in the browser
+
+The web interface is perfect for:
+- **Non-technical users** who prefer graphical interfaces
+- **Batch operations** with visual progress tracking
+- **Quick exports** without command-line knowledge
+- **Content preview** before downloading
 
 ## REST API
 
