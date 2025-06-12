@@ -1,6 +1,11 @@
 # Jira Task Exporter
 
-This script allows you to fetch Jira task data and export it in both XML and Markdown formats.
+[![Python Version](https://img.shields.io/badge/python-3.6%2B-blue.svg)](https://python.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub release](https://img.shields.io/github/release/kpapap/jira-tasks-export.svg)](https://github.com/kpapap/jira-tasks-export/releases)
+[![GitHub issues](https://img.shields.io/github/issues/kpapap/jira-tasks-export.svg)](https://github.com/kpapap/jira-tasks-export/issues)
+
+This script allows you to fetch Jira task data and export it in multiple formats: XML, JSON, Markdown, and Raw.
 
 ## Prerequisites
 
