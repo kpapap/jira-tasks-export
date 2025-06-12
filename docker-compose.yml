@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  jira-exporter:
+    build: .
+    container_name: jira-task-exporter
+    ports:
+      - '8000:8000' # FastAPI server
+      - '8501:8501' # Streamlit Web UI
+    environment:
+      # Set your Jira credentials here or in .env file
+      - JIRA_API_TOKEN=${JIRA_API_TOKEN}
+      - JIRA_API_URL=${JIRA_API_URL}
+      - JIRA_API_USER=${JIRA_API_USER}
+    env_file:
+      - .env # Optional: load from .env file
+    volumes:
+      # Optional: mount volume for persistent exports
+      - ./exports:/app/exports
+    restart: unless-stopped
+    command: both # Start both API and Web UI
+    healthcheck:
+      test:
+        ['CMD', 'curl', '-f', 'http://localhost:8000/health', '||', 'exit', '1']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Alternative: API server only
+  jira-exporter-api:
+    build: .
+    container_name: jira-task-exporter-api
+    ports:
+      - '8000:8000'
+    environment:
+      - JIRA_API_TOKEN=${JIRA_API_TOKEN}
+      - JIRA_API_URL=${JIRA_API_URL}
+      - JIRA_API_USER=${JIRA_API_USER}
+    env_file:
+      - .env
+    volumes:
+      - ./exports:/app/exports
+    restart: unless-stopped
+    command: api
+    profiles:
+      - api-only
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8000/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Alternative: Web UI only
+  jira-exporter-web:
+    build: .
+    container_name: jira-task-exporter-web
+    ports:
+      - '8501:8501'
+    environment:
+      - JIRA_API_TOKEN=${JIRA_API_TOKEN}
+      - JIRA_API_URL=${JIRA_API_URL}
+      - JIRA_API_USER=${JIRA_API_USER}
+    env_file:
+      - .env
+    volumes:
+      - ./exports:/app/exports
+    restart: unless-stopped
+    command: web
+    profiles:
+      - web-only
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:8501/_stcore/health']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  exports:
+    driver: local

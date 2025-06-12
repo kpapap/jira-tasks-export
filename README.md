@@ -15,6 +15,69 @@ This script allows you to fetch Jira task data and export it in multiple formats
 
 ## Installation
 
+Choose between Docker (recommended) or local Python installation:
+
+### 🐳 Docker Installation (Recommended)
+
+Docker provides the easiest way to run the application with all dependencies included.
+
+#### Prerequisites for Docker
+
+- Docker and Docker Compose installed
+- Jira API credentials
+
+#### Quick Start with Docker
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/kpapap/jira-tasks-export.git
+cd jira-tasks-export
+```
+
+2. Create environment file:
+
+```bash
+cp .env.docker .env
+# Edit .env with your Jira credentials
+```
+
+3. Start all services:
+
+```bash
+docker-compose up -d
+```
+
+4. Access the applications:
+
+- **Web UI**: http://localhost:8501
+- **API Server**: http://localhost:8000
+- **API Documentation**: http://localhost:8000/docs
+
+#### Docker Usage Options
+
+```bash
+# Start both Web UI and API server
+docker-compose up -d
+
+# Start only API server
+docker-compose --profile api-only up -d
+
+# Start only Web UI
+docker-compose --profile web-only up -d
+
+# Run CLI tool in container
+docker-compose run --rm jira-exporter cli SRD-1003 json
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+### 🐍 Local Python Installation
+
 1. Create a virtual environment (optional but recommended):
 
 ```bash
@@ -45,6 +108,41 @@ JIRA_API_URL=your_domain.atlassian.net
 ## Usage
 
 The Jira Task Exporter provides three different interfaces to suit various use cases:
+
+### 🐳 Docker Usage (Recommended)
+
+If using Docker, all services can be managed with simple commands:
+
+```bash
+# Start all services (Web UI + API)
+docker-compose up -d
+
+# Access applications
+# Web UI: http://localhost:8501
+# API: http://localhost:8000/docs
+
+# Export via CLI in container
+docker-compose run --rm jira-exporter cli SRD-1003 json
+
+# View real-time logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+```
+
+#### Docker Service Options
+
+```bash
+# API server only (port 8000)
+docker-compose --profile api-only up -d
+
+# Web UI only (port 8501)
+docker-compose --profile web-only up -d
+
+# Custom container run
+docker run -p 8501:8501 -e JIRA_API_TOKEN=your_token jira-exporter web
+```
 
 ### 🌐 Web UI (Recommended for most users)
 
