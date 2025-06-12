@@ -209,7 +209,7 @@ The web interface will be available at:
 
 - **🎨 User-Friendly Interface**: Clean, intuitive design with modern styling
 - **⚙️ Easy Configuration**: Simple credential management with environment variable detection
-- **📤 Multiple Input Methods**: 
+- **📤 Multiple Input Methods**:
   - Single issue input
   - Comma-separated multiple issues
   - Text area for bulk issue lists
@@ -229,6 +229,7 @@ The web interface will be available at:
 6. **Preview**: View exported content directly in the browser
 
 The web interface is perfect for:
+
 - **Non-technical users** who prefer graphical interfaces
 - **Batch operations** with visual progress tracking
 - **Quick exports** without command-line knowledge
