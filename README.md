@@ -23,13 +23,37 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+3. (Optional) Set up environment variables by copying the example file:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` with your actual Jira credentials:
+
+```bash
+JIRA_API_TOKEN=your_jira_api_token_here
+JIRA_API_USER=your_email@domain.com
+JIRA_API_URL=your_domain.atlassian.net
+```
+
 ## Usage
 
-Run the script with the following arguments:
+You can run the script in two ways:
+
+### Method 1: Command Line Arguments
 
 ```bash
 python jira_exporter.py <jira_token> <jira_server> <issue_key(s)> [format]
 ```
+
+### Method 2: Environment Variables
+
+```bash
+python jira_exporter.py ":" "" <issue_key(s)> [format]
+```
+
+When using `":"` as the token and `""` as the server, the script will use the values from your `.env` file.
 
 ### Single Issue Export
 

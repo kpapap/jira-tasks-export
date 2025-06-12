@@ -1,0 +1,41 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+## [1.0.0] - 2025-06-12
+
+### Added
+
+- Initial release of Jira Task Exporter
+- Support for multiple export formats: XML, JSON, Markdown, and Raw
+- Comprehensive issue data export including:
+  - Basic fields (key, summary, description, etc.)
+  - Status, priority, and dates
+  - Assignee and reporter information
+  - Labels and components
+  - Comments with author and timestamps
+  - Web links with relationships
+- Rich relationship support:
+  - Direct subtasks
+  - Epic/Story relationships
+  - Issue links (both inward and outward)
+  - Relationship type preservation
+- Support for single and multiple issue exports
+- Command-line interface with flexible parameters
+- Proper error handling and validation
+- Comprehensive documentation
+
+### Dependencies
+
+- requests>=2.31.0
+- jira>=3.5.1
+- xmltodict>=0.13.0
+- markdown>=3.4.3
+
+[Unreleased]: https://github.com/yourusername/jira-task-exporter/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/yourusername/jira-task-exporter/releases/tag/v1.0.0

@@ -7,6 +7,10 @@ from typing import Optional
 from jira import JIRA
 from jira.exceptions import JIRAError
 from exporters import JiraExporters
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Set up logging
 logging.basicConfig(
@@ -37,9 +41,9 @@ class JiraExporter:
                 email, api_token = self.token.split(':', 1)
             else:
                 # If no email provided, check environment variable
-                email = os.getenv('JIRA_EMAIL')
+                email = os.getenv('JIRA_API_USER')
                 if not email:
-                    raise ValueError("Email is required. Either provide it as 'email:token' or set JIRA_EMAIL environment variable")
+                    raise ValueError("Email is required. Either provide it as 'email:token' or set JIRA_API_USER environment variable")
                 api_token = self.token
 
             # Log connection attempt (without exposing the full token)
@@ -218,12 +222,35 @@ def main():
         print("\nExamples:")
         print("  Single issue: python jira_exporter.py YOUR-EMAIL:YOUR-TOKEN norbloc.atlassian.net PROJ-123 json")
         print("  Multiple issues: python jira_exporter.py YOUR-EMAIL:YOUR-TOKEN norbloc.atlassian.net \"PROJ-123,PROJ-124,PROJ-125\" json")
+        print("\nUsing environment variables:")
+        print("  Create a .env file with:")
+        print("    JIRA_API_TOKEN=your_token")
+        print("    JIRA_API_USER=your_email@domain.com")
+        print("    JIRA_API_URL=your_domain.atlassian.net")
+        print("  Then use: python jira_exporter.py \":\" \"\" PROJ-123 json")
         sys.exit(1)
 
-    token = sys.argv[1]
-    server = sys.argv[2]
+    token_arg = sys.argv[1]
+    server_arg = sys.argv[2]
     issue_keys_input = sys.argv[3]
     format = sys.argv[4] if len(sys.argv) > 4 else 'xml'
+
+    # Handle environment variable placeholders
+    if token_arg == ":" or token_arg == "":
+        token = os.getenv('JIRA_API_TOKEN')
+        if not token:
+            print("Error: JIRA_API_TOKEN environment variable is required when using ':' as token")
+            sys.exit(1)
+    else:
+        token = token_arg
+
+    if server_arg == "" or server_arg == "env":
+        server = os.getenv('JIRA_API_URL')
+        if not server:
+            print("Error: JIRA_API_URL environment variable is required when using empty string as server")
+            sys.exit(1)
+    else:
+        server = server_arg
 
     if format not in ['xml', 'json', 'markdown', 'raw']:
         print("Error: Format must be one of: xml, json, markdown, raw")
