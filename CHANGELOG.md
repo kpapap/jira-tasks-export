@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2025-06-12
+
+### Added
+- Environment variable support for Jira credentials
+- Simplified command syntax: `python jira_exporter.py ISSUE-KEY format`
+- Automatic detection of `.env` file configuration
+- Support for `python-dotenv` package
+- Enhanced help messages with multiple usage examples
+
+### Changed
+- Command line interface now supports simplified syntax when `.env` is configured
+- Updated README.md with comprehensive usage examples
+- Improved error handling for missing environment variables
+
+### Maintained
+- Full backward compatibility with original command syntax
+- Support for environment variable placeholders (`:` and `""`)
+
 ## [1.0.0] - 2025-06-12
 
 ### Added

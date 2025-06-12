@@ -11,7 +11,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="jira-task-exporter",
-    version="1.0.0",
+    version="1.1.0",
     author="Your Name",
     author_email="your.email@example.com",
     description="A tool to export Jira tasks in multiple formats (XML, JSON, Markdown, Raw)",
