@@ -9,6 +9,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2025-06-12
+
+### Added
+
+- **Docker Containerization**: Complete containerized deployment solution
+  - Multi-service Dockerfile with Python 3.11 slim base
+  - Comprehensive Docker Compose orchestration
+  - Flexible entrypoint script supporting multiple run modes
+  - Docker-specific environment configuration templates
+  - Build-optimized .dockerignore file
+- **Container Features**:
+  - Multiple run modes: `both` (default), `api`, `web`, `cli`
+  - Non-root user execution for enhanced security
+  - Built-in health checks for container monitoring
+  - Auto-restart policies and volume support
+  - Full environment variable and .env file support
+- **Deployment Options**:
+  - Single command deployment with `docker-compose up -d`
+  - Service-specific profiles for API-only or Web-only deployment
+  - CLI tool execution within containers
+  - Cross-platform compatibility (Linux, macOS, Windows)
+
+### Technical Details
+
+- Container exposes ports 8000 (API) and 8501 (Web UI)
+- Supports persistent exports via volume mounts
+- Health checks ensure service availability
+- Optimized build process with multi-layer caching
+- Production-ready with proper signal handling
+
 ## [1.3.0] - 2025-06-12
 
 ### Added
@@ -123,6 +153,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - python-dotenv>=1.0.0
 
 [Unreleased]: https://github.com/kpapap/jira-tasks-export/compare/v1.1.0...HEAD
+[1.4.0]: https://github.com/kpapap/jira-tasks-export/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/kpapap/jira-tasks-export/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/kpapap/jira-tasks-export/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/kpapap/jira-tasks-export/compare/v1.0.0...v1.1.0

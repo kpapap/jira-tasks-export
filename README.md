@@ -76,6 +76,46 @@ docker-compose logs -f
 docker-compose down
 ```
 
+#### Docker Service Modes
+
+The Docker container supports multiple run modes via the entrypoint script:
+
+```bash
+# Run both services (default)
+docker run -p 8000:8000 -p 8501:8501 jira-exporter both
+
+# Run only API server
+docker run -p 8000:8000 jira-exporter api
+
+# Run only Web UI
+docker run -p 8501:8501 jira-exporter web
+
+# Run CLI tool
+docker run --rm -e JIRA_API_TOKEN=your_token jira-exporter cli SRD-1003 json
+```
+
+#### Docker Advanced Configuration
+
+```bash
+# Build custom image
+docker build -t my-jira-exporter .
+
+# Run with custom environment
+docker run -d \
+  -p 8000:8000 -p 8501:8501 \
+  -e JIRA_API_TOKEN=your_token \
+  -e JIRA_API_URL=your_domain.atlassian.net \
+  -e JIRA_API_USER=your_email@domain.com \
+  -v ./exports:/app/exports \
+  --name jira-exporter \
+  jira-exporter
+
+# Monitor container health
+docker ps  # Check status
+docker logs jira-exporter  # View logs
+docker exec -it jira-exporter bash  # Shell access
+```
+
 ### 🐍 Local Python Installation
 
 1. Create a virtual environment (optional but recommended):
