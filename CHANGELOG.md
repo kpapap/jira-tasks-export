@@ -54,6 +54,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - jira>=3.5.1
 - xmltodict>=0.13.0
 - markdown>=3.4.3
+- python-dotenv>=1.0.0
 
-[Unreleased]: https://github.com/yourusername/jira-task-exporter/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/yourusername/jira-task-exporter/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/yourusername/jira-task-exporter/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/yourusername/jira-task-exporter/releases/tag/v1.0.0
