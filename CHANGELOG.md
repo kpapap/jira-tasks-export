@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [Unreleased]
+
+## [1.3.0] - 2025-06-12
+
+### Added
+
+- **Streamlit Web UI**: Complete web interface for non-technical users
+  - User-friendly graphical interface with modern styling
+  - Multiple input methods (single issue, comma-separated, text area)
+  - Real-time export status and progress tracking
+  - Instant download functionality with ZIP support for multiple files
+  - Content preview for exported data
+  - Automatic environment variable detection
+  - Secure credential handling with session isolation
+- **Web Interface Features**:
+  - Clean, responsive design with custom CSS styling
+  - Visual progress indicators and status updates
+  - One-click downloads for single files or ZIP archives
+  - Browser-based content preview
+  - Batch processing with automatic file organization
+- **Startup Script**: `start_web.py` for easy web server launch
+- **Enhanced Documentation**: Updated README.md with comprehensive Web UI section
+
+### Technical Details
+
+- Added Streamlit>=1.28.0 dependency
+- Web UI runs on `http://localhost:8501` by default
+- Supports all existing export formats and features
+- Perfect for non-technical users who prefer graphical interfaces
+- Complements existing CLI and REST API interfaces
+
 ## [1.2.0] - 2025-06-12
 
 ### Added
@@ -92,6 +123,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - python-dotenv>=1.0.0
 
 [Unreleased]: https://github.com/kpapap/jira-tasks-export/compare/v1.1.0...HEAD
+[1.3.0]: https://github.com/kpapap/jira-tasks-export/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/kpapap/jira-tasks-export/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/kpapap/jira-tasks-export/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/kpapap/jira-tasks-export/releases/tag/v1.0.0
