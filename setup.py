@@ -17,7 +17,7 @@ setup(
     description="A tool to export Jira tasks in multiple formats (XML, JSON, Markdown, Raw)",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/jira-task-exporter",
+    url="https://github.com/kpapap/jira-tasks-export",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",
